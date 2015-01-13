@@ -7,36 +7,16 @@ $(document).ready(function () {
 		$(window).keypress(function(e) {
 			var key = e.which;
 			console.log(key);
-			if (key == 106) {
+			if (key == 106 || key == 74) {
 				console.log("in");
 				game.moveCar(-1);
-			} else if (key == 107) {
+			} else if (key == 107 || key == 75) {
 				game.moveCar(1);
 			}
 			//game.shiftBoard();
 		});
 	});
 });
-
-// function playGame() {
-// 	cnt = 10;
-// 	var other = 0;
-// 	$("td").text("");
-// 	//var cnt = 10;
-// 	var delay = 100;
-// 	var func = setInterval(function() {
-// 		var col = Math.floor(Math.random() * WINDOW_WIDTH);
-// 		var row = Math.floor(Math.random() * WINDOW_DEPTH);
-// 		$("#b" + row + "-" + col).text("X");
-// 		cnt--;
-// 		other++;
-// 		console.log(cnt + "; " + other);
-
-// 		if (cnt <= 0) {
-// 			clearInterval(func);
-// 		}
-// 	}, delay);
-// }
 
 function playGame() {
 	game = new Game();
@@ -87,7 +67,6 @@ function Game() {
 		// update the score and board
 		this.updateScore();
 		this.updateBoard();
-		console.log(score);
 	}
 
 	this.updateScore = function() {
@@ -101,6 +80,9 @@ function Game() {
 			|| car_loc >= obj.right);
 	}
 }
+
+
+// ----- Game Prototype Functions ----- //
 
 Game.prototype.getNewBorderObj = function(prev_obj, width) {
 	var turn = Math.floor(Math.random()*3.25-1);
