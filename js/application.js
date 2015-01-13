@@ -6,26 +6,28 @@ $(document).ready(function () {
 	$(function() {
 		$(window).keypress(function(e) {
 			var key = e.which;
-			console.log(key);
 			if (key == 106 || key == 74) {
-				console.log("in");
 				game.moveCar(-1);
 			} else if (key == 107 || key == 75) {
 				game.moveCar(1);
 			}
-			//game.shiftBoard();
 		});
 	});
 });
 
 function playGame() {
+	$("#play-button").text("Playing!");
 	game = new Game();
 	game.updateBoard()
 
 	var delay = 50;
 	var func = setInterval(function() {
 		game.shiftBoard();
-		if (game.checkCrash()) clearInterval(func);
+		if (game.checkCrash()) {
+			clearInterval(func);
+			$("#play-button").text("Score: " + game.getScore()
+				+ "! Play Again?");
+		}
 	}, delay);
 }
 
@@ -71,7 +73,7 @@ function Game() {
 
 	this.updateScore = function() {
 		score++;
-		if (score % 7 == 0) this.thinRoad();
+		if (score % 7 == 0 && score > 1) this.thinRoad();
 	}
 
 	this.checkCrash = function() {
@@ -79,6 +81,8 @@ function Game() {
 		return (car_loc <= obj.left
 			|| car_loc >= obj.right);
 	}
+
+	this.getScore = function() {return score};
 }
 
 
@@ -99,9 +103,9 @@ Game.prototype.getNewBorderObj = function(prev_obj, width) {
 }
 
 Game.prototype.drawBorders = function(border_loc) {
+	var self = this;
 	border_loc.forEach(function(obj, ind) {
-		// Ask about this!
-		Game.prototype._drawBorderFromObject(obj, ind);
+		self._drawBorderFromObject(obj, ind);
 	});
 }
 
