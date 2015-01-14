@@ -20,7 +20,6 @@ function playGame() {
 	game = new Game();
 	game.updateBoard()
 
-	var delay = 50;
 	var func = setInterval(function() {
 		game.shiftBoard();
 		if (game.checkCrash()) {
@@ -28,7 +27,7 @@ function playGame() {
 			$("#play-button").text("Score: " + game.getScore()
 				+ "! Play Again?");
 		}
-	}, delay);
+	}, DELAY_SPEED);
 }
 
 
@@ -73,7 +72,7 @@ function Game() {
 
 	this.updateScore = function() {
 		score++;
-		if (score % 7 == 0 && score > 1) this.thinRoad();
+		if (score % WIDTH_CHANGE == 0 && road_width > 2) this.thinRoad();
 	}
 
 	this.checkCrash = function() {
